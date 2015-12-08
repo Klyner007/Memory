@@ -6,11 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Media.Playback;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 using Memory.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -23,64 +26,73 @@ namespace Memory.Views
     public sealed partial class Game : Page
     {
         private Dictionary<int, string> memoryDictionary;
-
-        private String _scorePlayerOne = "0";
-        private String _scorePlayerTwo = "0";
-
-        public string ScorePlayerTwo
-        {
-            get { return _scorePlayerTwo; }
-            set
-            {
-                if (value != _scorePlayerTwo)
-                {
-                    _scorePlayerTwo = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
         private static BitmapImage backgroundImage;
         private Stopwatch stopwatch;
+        private Stopwatch stopwatch_2;
         private DispatcherTimer timer;
         private List<Button> buttonCollection;
+        private PlayerScore s = new PlayerScore();
 
         public Game()
         {
+            InitializeTimers();
+            
+            this.DataContext = s;
+            
+            s.GameScorePlayerOne = 0;
+            s.TimePlayerOne = 0;
+            s.TotalScorePlayerOne = 0;
+            s.WrongChoicesPlayerOne = 0;
+
+            s.GameScorePlayerTwo = 0;
+            s.TimePlayerTwo = 0;
+            s.TotalScorePlayerTwo = 0;
+            s.WrongChoicesPlayerTwo = 0;
+
+            InitializeNewGame();
+        }
+
+        private void InitializeNewGame()
+        {
             InitializeComponent();
             InitializeCards();
-            InitializeTimers();
+            UpdateUi();
 
-            this.DataContext = new Score()
-            {
-                playerOneScore = 0,
-                playerTwoScore = 0
-            };
+            pairsFound = 0;
 
-            _scorePlayerOne = "0";
-            _scorePlayerTwo = "1";
-
-            ScorePlayerTwo = "2";
-
-            buttonCollection = gameGrid.Children.OfType<Button>().ToList();
+            buttonCollection = buttonPanel1.Children.OfType<Button>().ToList();
+            buttonCollection.AddRange(buttonPanel2.Children.OfType<Button>().ToList());
+            buttonCollection.AddRange(buttonPanel3.Children.OfType<Button>().ToList());
+            buttonCollection.AddRange(buttonPanel4.Children.OfType<Button>().ToList());
 
             foreach (Button button in buttonCollection)
             {
-                button.Content = new BitmapImage(new Uri(memoryDictionary[0]));
+                button.Content = null;//new BitmapImage(new Uri(memoryDictionary[0]));
             }
-        }
 
+            gameFinished = false;
+        }
+        
         private void InitializeTimers()
         {
             stopwatch = new Stopwatch();
+            stopwatch.Start();
+            stopwatch_2 = new Stopwatch();
+            stopwatch_2.Start();
             timer = new DispatcherTimer();
             timer.Tick += TimerOnTick;
-            stopwatch.Start();
             timer.Start();
         }
 
         private void TimerOnTick(object sender, object o)
         {
+            if (stopwatch_2.Elapsed.Seconds == 1)
+            {
+                s.TimePlayerOne = playerOneTurn ? s.TimePlayerOne + 1 : s.TimePlayerOne;
+                s.TimePlayerTwo = !playerOneTurn ? s.TimePlayerTwo + 1 : s.TimePlayerTwo;
+                stopwatch_2.Reset();
+                stopwatch_2.Start();
+            }
             timerTextBlock.Text = stopwatch.Elapsed.Minutes.ToString("00") + ":" + stopwatch.Elapsed.Seconds.ToString("00");
         }
         
@@ -106,7 +118,6 @@ namespace Memory.Views
             int[] aantalkaarten = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
             var naam = aantalkaarten.ToList();
             var random = new Random();
-            var randomvalue = 0;
             for (var i = 0; i < 6; i++)
             {
                 for (var a = 0; a < 2; a++)
@@ -116,14 +127,12 @@ namespace Memory.Views
                         cardArray[i, a] = naam.First();
                         break;
                     }
-                    randomvalue = random.Next(1, naam.Count);
+                    var randomvalue = random.Next(1, naam.Count);
                     var uniekvalue = naam.ToArray()[randomvalue];
                     naam.Remove(uniekvalue);
                     cardArray[i, a] = uniekvalue;
                 }
             }
-            bool vs = true;
-            vs = false;
         }
         
         private int Matchcard(int cardnumber)
@@ -139,13 +148,40 @@ namespace Memory.Views
         private bool _firstOpenCard = true;
         private Button _cardOneButton;
         private bool playerOneTurn = true;
-        private int[] playersGameScore = new int[2];
         private int pairsFound = 0;
+        private bool gameFinished;
 
         private async void Card_Click(object sender, RoutedEventArgs e)
         {
+            s.GameScorePlayerOne = s.GameScorePlayerOne + 1;
             var cardButton = (Button)sender;
+            if (!gameFinished)
+            {
+                handleClick(cardButton);
+            }
+            else
+            {
+                s.TotalScorePlayerOne = s.GameScorePlayerOne > 2 ? s.TotalScorePlayerOne + 1 : s.TotalScorePlayerOne;
+                s.TotalScorePlayerTwo = s.TotalScorePlayerTwo > 2 ? s.TotalScorePlayerTwo + 1 : s.TotalScorePlayerTwo;
+                
+                if (s.TotalScorePlayerOne > 2)
+                {
+                    Memory.Views.Highscore.AddHighscore(textBlock.Text, s.TimePlayerTwo, s.WrongChoicesPlayerTwo, s.TotalScorePlayerOne);
+                    Frame.Navigate(typeof(Highscore));
+                }
+                else if (s.TotalScorePlayerTwo > 2)
+                {
+                    Memory.Views.Highscore.AddHighscore(textBlock1.Text, s.TimePlayerTwo, s.WrongChoicesPlayerTwo, s.TotalScorePlayerTwo);
+                    Frame.Navigate(typeof(Highscore));
+                }
 
+                playerOneTurn = !playerOneTurn;
+                InitializeNewGame();
+            }
+        }
+
+        private async void handleClick(Button cardButton)
+        {
             if (cardButton.Content == null)
             {
                 if (_firstOpenCard)
@@ -178,29 +214,35 @@ namespace Memory.Views
                             Matchcard(Convert.ToInt32(_cardOneButton.Name.Substring(4))))
                         {
                             pairsFound += 1;
-
-                            if (pairsFound == (cardArray.Length/2))
+                            if (playerOneTurn)
                             {
-                                // todo score toevoegen? kaarten laten verdwijnen
-                                //_cardOneButton.Content =;
-                                //cardButton.Content =;
-                                if (playerOneTurn)
-                                {
-                                    _scorePlayerOne = (Convert.ToInt32(_scorePlayerOne) + 1).ToString();
-                                }
-                                else
-                                {
-                                    _scorePlayerTwo = (Convert.ToInt32(_scorePlayerTwo) + 1).ToString();
-                                }
+                                s.GameScorePlayerOne = s.GameScorePlayerOne + 1;
+                            }
+                            else
+                            {
+                                s.GameScorePlayerTwo = s.GameScorePlayerTwo + 1;
                             }
 
+                            if (pairsFound == (cardArray.Length / 2))
+                            {
+                                gameFinished = true;
+                            }
                         }
                         else
                         {
+                            if (playerOneTurn)
+                            {
+                                s.WrongChoicesPlayerOne = s.WrongChoicesPlayerOne + 1;
+                            }
+                            else
+                            {
+                                s.WrongChoicesPlayerTwo = s.WrongChoicesPlayerTwo + 1;
+                            }
                             await Test(cardButton, _cardOneButton);
+                            playerOneTurn = !playerOneTurn;
                         }
                     }
-                    playerOneTurn = !playerOneTurn;
+                    UpdateUi();
                 }
             }
         }
@@ -217,18 +259,20 @@ namespace Memory.Views
 
         }
 
-        #region INPC
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        private void UpdateUi()
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            arrowPlayerOneImage.Visibility = playerOneTurn ? Visibility.Visible : Visibility.Collapsed;
+            arrowPlayerTwoImage.Visibility = !playerOneTurn ? Visibility.Visible : Visibility.Collapsed;
+            arrowPlayerOneImage_2.Visibility = playerOneTurn ? Visibility.Visible : Visibility.Collapsed;
+            arrowPlayerTwoImage_2.Visibility = !playerOneTurn ? Visibility.Visible : Visibility.Collapsed;
         }
-        #endregion
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            string[] parameter = e.Parameter as string[];
+            textBlock.Text = parameter[0];
+            textBlock1.Text = parameter[1];
+        }
 
         //public class MediaPlayer
         //{

@@ -35,6 +35,13 @@ namespace Memory
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            //todo weghalen
+            //var db = new SQLiteDb();
+            //db.Create();
+            //db.AddHighscore();
+            //db.GetTopHighscores();
+            //db.Update();
+            //db.Saveandclose();
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)

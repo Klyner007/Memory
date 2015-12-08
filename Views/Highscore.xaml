@@ -1,0 +1,100 @@
+﻿<Page
+    x:Class="Memory.Views.Highscore"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Memory.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interop="using:Windows.UI.Xaml.Interop"
+    mc:Ignorable="d">
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" Height="100">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Red" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle Grid.Row="1" >
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="1,0" StartPoint="1,1">
+                    <GradientStop Color="Blue" Offset="0"/>
+                    <GradientStop Color="White" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <TextBlock Text="Memory"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            FontSize="55"
+            FontFamily="Fonts/123Sketch.ttf#123Sketch" Grid.Row="0" Grid.ColumnSpan="2" Margin="51,20,51,19" />
+
+
+
+
+        <!--<TextBlock Grid.Row="1" HorizontalAlignment="Center" FontSize="66">Top 10</TextBlock>-->
+        <ListView Grid.Row="1" IsItemClickEnabled="False" Height="500" VerticalAlignment="Top" FontSize="15" HorizontalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="75"/>
+                    <RowDefinition Height="425"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Margin="20" Grid.Row="0">
+                    <TextBlock Grid.Column="0" HorizontalAlignment="Center" Width="100" FontSize="20" Text="Name"/>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" Width="100" FontSize="20" Text="Incorrect"/>
+                    <TextBlock Grid.Column="2" HorizontalAlignment="Center" Width="80" FontSize="20" Text="Points"/>
+                    <TextBlock Grid.Column="3" HorizontalAlignment="Center" Width="80" FontSize="20" Text="Time" />
+                </StackPanel>
+                <ListView ItemsSource="{Binding CurrentCardList}" Grid.Row="1">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="{Binding ActualWidth, ElementName=ListView}">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <TextBlock Grid.Column="0" Width="100" Text="{Binding Name}" FontSize="15" />
+                                    <TextBlock Grid.Column="1" Width="100" Text="{Binding IncorrectPairs}" FontSize="15" />
+                                    <TextBlock Grid.Column="2" Width="100" Text="{Binding Points}" FontSize="15" />
+                                    <TextBlock Grid.Column="3" Width="100" Text="{Binding TimeInSeconds}" FontSize="15" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
+        </ListView>
+        
+        <!--<ListView Grid.Row="1" IsItemClickEnabled="False" x:Name="ListView" Margin="10,50,10,50" ItemsSource="{Binding CurrentCardList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="{Binding ActualWidth, ElementName=ListView}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <TextBlock Grid.Column="0" Width="100" Text="{Binding Name}" FontSize="15" />
+                            <TextBlock Grid.Column="1" Width="100" Text="{Binding IncorrectPairs}" FontSize="15" />
+                            <TextBlock Grid.Column="2" Width="100"  Text="{Binding Points}" FontSize="15" />
+                            <TextBlock Grid.Column="3" Width="100"  Text="{Binding TimeInSeconds}" FontSize="15" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>-->
+    </Grid>
+</Page>

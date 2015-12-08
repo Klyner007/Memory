@@ -38,6 +38,11 @@
             FontFamily="/Fonts/123Sketch.ttf#123Sketch" Grid.Row="0" Grid.ColumnSpan="2" Margin="51,20,51,19" />
 
         <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,0,50">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox x:Name="tbPlayerOne" Width="110" TextAlignment="Center"/>
+                <TextBlock Width="30" TextAlignment="Center" VerticalAlignment="Center"> VS</TextBlock>
+                <TextBox x:Name="tbPlayerTwo" Width="110" TextAlignment="Center"/>
+            </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Height="50px" Margin="5">
                 <Border BorderBrush="#FF000000" BorderThickness="4,4,4,4" CornerRadius="11,11,11,11">
@@ -53,7 +58,13 @@
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Height="50px" Margin="5">
                 <Border BorderBrush="#FF000000" BorderThickness="4,4,4,4" CornerRadius="11,11,11,11">
-                    <Button Content="Quit" VerticalAlignment="Stretch" Width="200" Click="Button_Click_1"></Button>
+                    <Button Content="Highscore" VerticalAlignment="Stretch" Width="200" Click="highscore_OnClick"/>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Height="50px" Margin="5">
+                <Border BorderBrush="#FF000000" BorderThickness="4,4,4,4" CornerRadius="11,11,11,11">
+                    <Button Content="Quit" VerticalAlignment="Stretch" Width="200" Click="exit_OnClick"></Button>
                 </Border>
             </StackPanel>
         </StackPanel>

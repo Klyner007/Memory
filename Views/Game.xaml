@@ -41,7 +41,7 @@
                         <Setter Target="stackPanel3.(UIElement.Visibility)" Value="Collapsed"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1000"/>
+                        <AdaptiveTrigger MinWindowWidth="1100"/>
                     </VisualState.StateTriggers>
                 </VisualState>
                 <VisualState x:Name="WideState">
@@ -97,17 +97,18 @@
             <TextBlock x:Name="textBlock" FontFamily="/Fonts/123Sketch.ttf#123Sketch"
                        FontSize="77"
                        HorizontalAlignment="Center"
-                       Margin="0,0,0,30">
+                       Margin="10,0,0,30">
                 Player 1
             </TextBlock>
             <Image x:Name="image" Source="../Assets/Additional/trophee.png" HorizontalAlignment="Center" Height="150" />
             <TextBlock x:Name="scoreOfPlayerOne"
                        HorizontalAlignment="Center"
-                       Text="{Binding playerOneScore}"
+                       Text="{Binding TotalScorePlayerOne, Mode=OneWay}"
                        Margin="0,5,0,0"
                        FontSize="66"
-                       FontFamily="/Fonts/123Sketch.ttf#123Sketch"/>
-            <Image Source="../Assets/Additional/up.png" Height="80"></Image>
+                       FontFamily="/Fonts/123Sketch.ttf#123Sketch">
+            </TextBlock>
+            <Image x:Name="arrowPlayerOneImage" Source="../Assets/Additional/up.png" Height="80"></Image>
         </StackPanel>
         <StackPanel x:Name="stackPanel2" Orientation="Vertical" Grid.Row="1" Width="400" HorizontalAlignment="Right" Margin="0,0,10,0">
             <TextBlock x:Name="textBlock1" FontFamily="/Fonts/123Sketch.ttf#123Sketch"
@@ -119,31 +120,54 @@
             <Image x:Name="image1" Source="../Assets/Additional/trophee.png" HorizontalAlignment="Center" Height="150" />
             <TextBlock HorizontalAlignment="Center"
                        x:Name="scoreOfPlayerTwo"
-                       Text="{Binding playerOneScore}"
+                       Text="{Binding TotalScorePlayerTwo, Mode=OneWay}"
                        Margin="0,5,0,0"
                        FontSize="66"
                        FontFamily="/Fonts/123Sketch.ttf#123Sketch">
-                0
             </TextBlock>
-            <Image Source="../Assets/Additional/up.png" Height="80"></Image>
+            <Image x:Name="arrowPlayerTwoImage" Source="../Assets/Additional/up.png" Height="80"></Image>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="18,10,20,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+        <!--<Popup x:Uid="LoginPopup" IsOpen="True" Name="LoginPopup" Grid.Row="1">
+            <Grid Background="Red" x:Name="gdChild" Height="Auto" Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="10" Grid.Column="0" Grid.Row="0" Text="App Name" Grid.ColumnSpan="2" />
+                <TextBlock Margin="10" Grid.Column="0" Grid.Row="1" Text="Username" />
+                <TextBox Margin="10" Grid.Column="1" Grid.Row="1" Name="InputUsername" />
+                <TextBlock Margin="10" Grid.Column="0" Grid.Row="2" Text="Password" />
+                <PasswordBox Margin="10" Grid.Column="1" Grid.Row="2" Name="InputPassword" />
+                <StackPanel  Margin="10" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Button Name="Login"  x:Uid="LoginPopupLogin"  />
+                    <Button Name="Cancel" x:Uid="LoginPopupCancel" />
+                </StackPanel>
+            </Grid>
+        </Popup>-->
+
+        <StackPanel x:Name="buttonPanel1" Orientation="Horizontal" Grid.Row="1" Margin="18,10,20,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
             <Button Style="{StaticResource ButtonStyle}" x:Name="Card1" Height="100" Width="100" Padding="0" Click="Card_Click"/>
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card2" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card3" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="18,130,20,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+        <StackPanel x:Name="buttonPanel2" Orientation="Horizontal" Grid.Row="1" Margin="18,130,20,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card4" Height="100" Width="100" Padding="0" Click="Card_Click"/>
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card5" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card6" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="18,250,20,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+        <StackPanel x:Name="buttonPanel3" Orientation="Horizontal" Grid.Row="1" Margin="18,250,20,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card7" Height="100" Width="100" Padding="0" Click="Card_Click"/>
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card8" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card9" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="18,370,20,0" Height="100" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+        <StackPanel x:Name="buttonPanel4" Orientation="Horizontal" Grid.Row="1" Margin="18,370,20,0" Height="100" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card10" Height="100" Width="100" Padding="0" Click="Card_Click"/>
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card11" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
             <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card12" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
@@ -154,13 +178,13 @@
         <!--Score player 1-->
         <StackPanel x:Name="stackPanel1" Orientation="Horizontal" Grid.Row="2">
             <Image x:Name="trophee_1" VerticalAlignment="Center" Margin="10,0,0,0" HorizontalAlignment="Left" Source="../Assets/Additional/trophee.png" Width="30" Height="30"/>
-            <TextBlock x:Name="TropheeLabelPlayer1" Text="{x:Bind _scorePlayerOne}" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="22" Width="44" FontFamily="/Fonts/123Sketch.ttf#123Sketch" VerticalAlignment="Center">0</TextBlock>
-            <Image VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Left" Source="../Assets/Additional/left.png" Width="30" Height="30"/>
+            <TextBlock x:Name="scoreOfPlayerOneNarrowState" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="22" Width="44" FontFamily="/Fonts/123Sketch.ttf#123Sketch" VerticalAlignment="Center" Text="{Binding TotalScorePlayerOne, Mode=OneWay}"></TextBlock>
+            <Image x:Name="arrowPlayerOneImage_2" VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Left" Source="../Assets/Additional/left.png" Width="30" Height="30"/>
         </StackPanel>
         <!--Score player 2-->
         <StackPanel x:Name="stackPanel3" Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
-            <Image VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Left" Source="../Assets/Additional/right.png" Width="30" Height="30"/>
-            <TextBlock x:Name="TropheeLabelPlayer2" Text="{x:Bind _scorePlayerOne}" TextWrapping="Wrap" Margin="10,0,10,0" Width="44" FontSize="22" FontFamily="/Fonts/123Sketch.ttf#123Sketch" VerticalAlignment="Center">0</TextBlock>
+            <Image x:Name="arrowPlayerTwoImage_2" VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Left" Source="../Assets/Additional/right.png" Width="30" Height="30"/>
+            <TextBlock x:Name="scoreOfPlayerTwoNarrowState" TextWrapping="Wrap" Margin="10,0,10,0" Width="44" FontSize="22" FontFamily="/Fonts/123Sketch.ttf#123Sketch" VerticalAlignment="Center" Text="{Binding TotalScorePlayerTwo, Mode=OneWay}"></TextBlock>
             <Image VerticalAlignment="Center" Margin="0,0,10,0" HorizontalAlignment="Left" Source="../Assets/Additional/trophee.png" Width="30" Height="30"/>
         </StackPanel>
     </Grid>
