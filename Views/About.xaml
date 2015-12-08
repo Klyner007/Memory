@@ -1,0 +1,123 @@
+﻿<Page
+    x:Class="Memory.Views.About"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Memory.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style x:Key="TextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Fonts/123Sketch.ttf#123Sketch"/>
+            <Setter Property="FontSize" Value="33"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </Page.Resources>
+
+     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="43"/>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="43"/>
+            <RowDefinition Height="108*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" Height="100" >
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Red" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle Grid.Row="1" Grid.RowSpan="5" >
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="1,0" StartPoint="1,1">
+                    <GradientStop Color="Blue" Offset="0"/>
+                    <GradientStop Color="White" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <!--title-->
+        <TextBlock Text="Memory"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            FontSize="55"
+            FontFamily="Fonts/123Sketch.ttf#123Sketch" Grid.Row="0" Grid.ColumnSpan="2" Margin="51,20,51,19" />
+
+        <!--Title 1-->
+        <TextBlock Grid.Row="1"
+                   HorizontalAlignment="Center" 
+                   Margin="10,0,0,0"
+                   FontWeight="Bold"
+                   FontSize="33"
+                   FontFamily="Fonts/123Sketch.ttf#123Sketch"
+                   VerticalAlignment="Center"
+                   TextWrapping="Wrap"
+                   >Rules</TextBlock>
+         
+        <!--Title 2-->
+        <Pivot Grid.Row="2" Grid.RowSpan="2">
+            <PivotItem Header="Step 1">
+                <TextBlock Style="{StaticResource TextStyle}">
+                    Mix up the cards.
+                </TextBlock>
+            </PivotItem>
+            <PivotItem Header="Step 2">
+                <TextBlock Style="{StaticResource TextStyle}">
+                    Lay them in rows, faced down.
+                </TextBlock>
+            </PivotItem>
+            <PivotItem Header="Step 3">
+                <TextBlock Style="{StaticResource TextStyle}">
+                    If the two cards match, keep them. If they don't match, turn them back over.
+                </TextBlock>
+            </PivotItem>
+            <PivotItem Header="Step 4">
+                <TextBlock Style="{StaticResource TextStyle}">
+                    Remember what was on each card and where it was.
+                </TextBlock>
+            </PivotItem>
+            <PivotItem Header="Step 5">
+                <TextBlock Style="{StaticResource TextStyle}">
+                    Watch and remember during the other player's turn.
+                </TextBlock>
+            </PivotItem>
+            <PivotItem Header="Step 6">
+                <TextBlock Style="{StaticResource TextStyle}">
+                    The game is over when all the cards have been matched. 
+                </TextBlock>
+            </PivotItem>
+            <PivotItem Header="Step 7">
+                <TextBlock Style="{StaticResource TextStyle}">
+                    The player with the most matches wins.
+                </TextBlock>
+            </PivotItem>
+        </Pivot>
+
+        <!--about-->
+        <TextBlock Grid.Row="3"
+                   HorizontalAlignment="Center" 
+                   FontWeight="Bold"
+                   FontSize="22"
+                   FontFamily="Fonts/123Sketch.ttf#123Sketch"
+                   VerticalAlignment="Center"
+                   TextWrapping="Wrap"
+                   >About</TextBlock>
+        <TextBlock Grid.Row="4"
+                   HorizontalAlignment="Center" 
+                   FontSize="18"
+                   FontFamily="Fonts/123Sketch.ttf#123Sketch"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   >This application is made commissioned by ©Avans breda.</TextBlock>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,0,50">
+
+        </StackPanel>
+    </Grid>
+</Page>

@@ -1,0 +1,167 @@
+﻿<Page
+    x:Class="Memory.Views.Game"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Memory"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="Gray"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Storyboard x:Name="Storyboard1"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="gameGrid">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="NarrowState">
+                    <VisualState.Setters>
+                        <Setter Target="stackPanel.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="stackPanel2.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="MediumState">
+                    <VisualState.Setters>
+                        <Setter Target="stackPanel.(UIElement.Visibility)" Value="Visible"/>
+                        <Setter Target="textBlock.(TextBlock.FontSize)" Value="56"/>
+                        <Setter Target="stackPanel.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
+                        <Setter Target="textBlock1.(TextBlock.FontSize)" Value="56"/>
+                        <Setter Target="stackPanel1.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="stackPanel3.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1000"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="WideState">
+                    <VisualState.Setters>
+                        <Setter Target="image.(FrameworkElement.Height)" Value="200"/>
+                        <Setter Target="image1.(FrameworkElement.Height)" Value="200"/>
+                        <Setter Target="stackPanel3.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="stackPanel1.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" Height="100" >
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Red" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle Grid.Row="1" Grid.RowSpan="3" >
+            <Rectangle.Fill>
+                <LinearGradientBrush
+            		EndPoint="0.5,0" StartPoint="0.5,1">
+                    <GradientStop
+            			Color="Blue" Offset="0"/>
+                    <GradientStop
+            			Color="White" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <TextBlock Text="Memory"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            FontSize="55"
+            FontFamily="/Fonts/123Sketch.ttf#123Sketch" Grid.ColumnSpan="2" Margin="51,20,51,19" />
+
+        <!--Score Wide State-->
+        <StackPanel x:Name="stackPanel" Orientation="Vertical" Grid.Row="1" Width="400" HorizontalAlignment="Left" Margin="10,0,0,0">
+            <TextBlock x:Name="textBlock" FontFamily="/Fonts/123Sketch.ttf#123Sketch"
+                       FontSize="77"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,30">
+                Player 1
+            </TextBlock>
+            <Image x:Name="image" Source="../Assets/Additional/trophee.png" HorizontalAlignment="Center" Height="150" />
+            <TextBlock x:Name="scoreOfPlayerOne"
+                       HorizontalAlignment="Center"
+                       Text="{Binding playerOneScore}"
+                       Margin="0,5,0,0"
+                       FontSize="66"
+                       FontFamily="/Fonts/123Sketch.ttf#123Sketch"/>
+            <Image Source="../Assets/Additional/up.png" Height="80"></Image>
+        </StackPanel>
+        <StackPanel x:Name="stackPanel2" Orientation="Vertical" Grid.Row="1" Width="400" HorizontalAlignment="Right" Margin="0,0,10,0">
+            <TextBlock x:Name="textBlock1" FontFamily="/Fonts/123Sketch.ttf#123Sketch"
+                       FontSize="77"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,30">
+                Player 2
+            </TextBlock>
+            <Image x:Name="image1" Source="../Assets/Additional/trophee.png" HorizontalAlignment="Center" Height="150" />
+            <TextBlock HorizontalAlignment="Center"
+                       x:Name="scoreOfPlayerTwo"
+                       Text="{Binding playerOneScore}"
+                       Margin="0,5,0,0"
+                       FontSize="66"
+                       FontFamily="/Fonts/123Sketch.ttf#123Sketch">
+                0
+            </TextBlock>
+            <Image Source="../Assets/Additional/up.png" Height="80"></Image>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="18,10,20,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+            <Button Style="{StaticResource ButtonStyle}" x:Name="Card1" Height="100" Width="100" Padding="0" Click="Card_Click"/>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card2" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card3" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="18,130,20,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card4" Height="100" Width="100" Padding="0" Click="Card_Click"/>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card5" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card6" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="18,250,20,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card7" Height="100" Width="100" Padding="0" Click="Card_Click"/>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card8" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card9" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="18,370,20,0" Height="100" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card10" Height="100" Width="100" Padding="0" Click="Card_Click"/>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card11" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="1" x:Name="Card12" Height="100" Width="100" Padding="0" Margin="10,0,0,0" Click="Card_Click"/>
+        </StackPanel>
+
+        <TextBlock x:Name="timerTextBlock" Grid.Row="2" HorizontalAlignment="Center" FontSize="33"  TextWrapping="Wrap" FontFamily="/Fonts/123Sketch.ttf#123Sketch" Text="00:00" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,22,0"/>
+
+        <!--Score player 1-->
+        <StackPanel x:Name="stackPanel1" Orientation="Horizontal" Grid.Row="2">
+            <Image x:Name="trophee_1" VerticalAlignment="Center" Margin="10,0,0,0" HorizontalAlignment="Left" Source="../Assets/Additional/trophee.png" Width="30" Height="30"/>
+            <TextBlock x:Name="TropheeLabelPlayer1" Text="{x:Bind _scorePlayerOne}" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="22" Width="44" FontFamily="/Fonts/123Sketch.ttf#123Sketch" VerticalAlignment="Center">0</TextBlock>
+            <Image VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Left" Source="../Assets/Additional/left.png" Width="30" Height="30"/>
+        </StackPanel>
+        <!--Score player 2-->
+        <StackPanel x:Name="stackPanel3" Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
+            <Image VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Left" Source="../Assets/Additional/right.png" Width="30" Height="30"/>
+            <TextBlock x:Name="TropheeLabelPlayer2" Text="{x:Bind _scorePlayerOne}" TextWrapping="Wrap" Margin="10,0,10,0" Width="44" FontSize="22" FontFamily="/Fonts/123Sketch.ttf#123Sketch" VerticalAlignment="Center">0</TextBlock>
+            <Image VerticalAlignment="Center" Margin="0,0,10,0" HorizontalAlignment="Left" Source="../Assets/Additional/trophee.png" Width="30" Height="30"/>
+        </StackPanel>
+    </Grid>
+</Page>
