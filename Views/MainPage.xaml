@@ -38,10 +38,13 @@
             FontFamily="/Fonts/123Sketch.ttf#123Sketch" Grid.Row="0" Grid.ColumnSpan="2" Margin="51,20,51,19" />
 
         <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,0,50">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBox x:Name="tbPlayerOne" Width="110" TextAlignment="Center"/>
-                <TextBlock Width="30" TextAlignment="Center" VerticalAlignment="Center"> VS</TextBlock>
-                <TextBox x:Name="tbPlayerTwo" Width="110" TextAlignment="Center"/>
+            <StackPanel Margin="0,0,0,5" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" Width="208" Orientation="Horizontal" d:LayoutOverrides="TopPosition, BottomPosition" Background="#FFF3A1A1" CornerRadius="1">
+                <TextBlock x:Name="textBlock"  TextWrapping="Wrap" Text="Name" Height="33" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22.667" Width="60" Margin="5,0,0,0"/>
+                <TextBox x:Name="tbPlayerOne" TextAlignment="Center" Background="#FFA6A6A6" Margin="10,5" Text="" Width="120" HorizontalAlignment="Right"/>
+            </StackPanel>
+            <StackPanel BorderBrush="Black" BorderThickness="1" Width="208" Orientation="Horizontal" HorizontalAlignment="Center" Background="#FF8BA6FF">
+                <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Height="31" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22.667" Width="60" Margin="5,0,0,0" Text="Host"/>
+                <TextBox x:Name="tbIpAddress" TextAlignment="Center" Background="#FFA6A6A6" Margin="10,5" Text="" Width="120" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Height="50px" Margin="5">
@@ -64,7 +67,7 @@
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Height="50px" Margin="5">
                 <Border BorderBrush="#FF000000" BorderThickness="4,4,4,4" CornerRadius="11,11,11,11">
-                    <Button Content="Quit" VerticalAlignment="Stretch" Width="200" Click="exit_OnClick"></Button>
+                    <Button Content="Quit" VerticalAlignment="Stretch" Width="200" Click="exit_OnClick"/>
                 </Border>
             </StackPanel>
         </StackPanel>

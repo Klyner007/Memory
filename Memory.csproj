@@ -123,6 +123,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\NetworkController.cs" />
     <Compile Include="Models\PlayerScore.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="SQLite.cs" />
